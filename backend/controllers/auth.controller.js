@@ -66,5 +66,11 @@ export async function login(req, res) {
 }
 
 export async function logout(req, res) {
-    res.send("logout is ready");
+    try {
+        res.clearCookie("jwt-token");
+        res.status(200).json({ success: true, message: "Logged out successfully" });
+    } catch (error) {
+        console.log("Error logout controller: ", error.message);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
 }
